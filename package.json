@@ -1,0 +1,22 @@
+{
+  "name": "heijitsu-tsurai-server",
+  "version": "1.0.0",
+  "description": "Server for Heijitsu Tsurai",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node app.js"
+  },
+  "author": "Cry",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-preset-es2015": "^6.22.0",
+    "express": "^4.14.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}
