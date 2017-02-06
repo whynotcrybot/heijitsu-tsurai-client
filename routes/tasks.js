@@ -2,44 +2,42 @@ import express from 'express'
 
 const router = express.Router()
 
-//  Get all tasks
-router.get('/tasks', (req, res) => {
-  res.send('list of tasks for today or specific day')
-})
+router.get('/tasks', (x,y) => getAllTasks(x,y))
+router.get('/tasks/completed', (x,y) => getAllCompletedTasks(x,y))
+router.get('/task/:id', (x,y) => getSpecificTask(x,y))
+router.get('/task/completed/:id', (x,y) => getSpecificCompletedTask(x,y))
 
-//  Get all completed tasks
-router.get('/tasks/completed', (req, res) => {
+router.post('/task', (x,y) => createNewTask(x,y))
+router.post('/task/completed/:id', (x,y) => createNewCompletedTask(x,y))
+
+router.delete('/task/:id', (x,y) => deleteSpecificTask(x,y))
+router.delete('/task/completed/:id', (x,y) => deleteSpecificCompletedTask(x,y))
+
+function getAllTasks(req, res){
+    res.send('list of tasks for today or specific day')
+}
+function getAllCompletedTasks(req, res){
   res.send('list of completed tasks for today or specific day')
-})
-
-//  Get specific task
-router.get('/task/:id', (req, res) => {
+}
+function getSpecificTask(req, res){
   res.send('info about specific task')
-})
-
-//  Get specific completed task
-router.get('/task/completed/:id', (req, res) => {
+}
+function getSpecificCompletedTask(req, res){
   res.send('info about specific task that is completed')
-})
+}
 
-//  Create new task
-router.post('/task', (req, res) => {
+function createNewTask(req, res){
   res.send('create new task')
-})
-
-//  Create new completed task
-router.post('/task/completed/:id', (req, res) => {
+}
+function createNewCompletedTask(req, res){
   res.send('complete a specific task')
-})
+}
 
-//  Delete a specific task
-router.delete('/task/:id', (req, res) => {
+function deleteSpecificTask(req, res){
   res.send('delete a specific task')
-})
-
-//  Delete a specific completed task
-router.delete('/task/completed/:id', (req, res) => {
+}
+function deleteSpecificCompletedTask(req, res){
   res.send('uncomplete a specific task')
-})
+}
 
 export default router
