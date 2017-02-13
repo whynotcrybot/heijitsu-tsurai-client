@@ -1,25 +1,35 @@
 import mongoose from 'mongoose'
-mongoose.Promise = require('q').Promise
+import q from 'q'
 
-const schema = new mongoose.Schema(
+mongoose.Promise = q.Promise
+
+const blueprintSchema = new mongoose.Schema(
   {
-    title				: String,
-    active    	: Boolean,
-    type        : String
+    title           : { type: String },
+    active          : { type: Boolean },
+    type            : { type: String },
+    createdAt       : { type: Date, default: Date.now },
+    updatedAt       : { type: Date, default: Date.now }
   },
   {
     collection: 'task.blueprints'
   }
 )
-schema.statics = {
+blueprintSchema.statics = {
   findAll: function(){
     return this.find()
   },
-  doesExist: function(id){
-    return this.count({_id : id})
-      .then(() => true)
-      .catch(() => false)
+  get: function(blueprintID){
+    return this.findOne({_id : blueprintID})
+  },
+  delete: function(blueprintID){
+    return this.findOneAndRemove({_id : blueprintID})
+  },
+  doesExist: function(blueprintID){
+    return this
+      .count({_id : blueprintID})
+      .then(count => count ? true : false)
   }
 }
 
-export default mongoose.model('BlueprintTask', schema)
+export default mongoose.model('BlueprintTask', blueprintSchema)

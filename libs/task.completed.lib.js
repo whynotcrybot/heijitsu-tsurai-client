@@ -5,19 +5,72 @@ export function getAll(req, res){
   CompletedTask
     .findAll()
     .then(tasks => res.json(tasks))
-    .catch(error => console.error('Error: ', error));
+    .catch(error => console.error('Error: ', error))
 }
+
 export function getTask(req, res){
-  res.send('info about specific task that is completed')
+  const completedID = req.params.completedID
+
+  if (!completedID.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.json({
+      message: "id is malformed"
+    })
+  }
+
+  if (!completedID.length) {
+    return res.json({
+      message: "id is empty"
+    })
+  }
+
+  CompletedTask
+    .get(completedID)
+    .then(task => res.json(task))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
 }
+
 export function createNewCompletedTask(req, res){
-  const blueprint = req.body.id;
+  const blueprintID = req.params.blueprintID
+
+  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.json({
+      message: "id is malformed"
+    })
+  }
+
+  if (!blueprintID.length) {
+    return res.json({
+      message: "id is empty"
+    })
+  }
+
   BlueprintTask
-    .doesExist(blueprint)
-    .then(x => x ? CompletedTask.add(blueprint) : "Task does not exist.")
-    .then(x => res.json(x))
-    .catch(error => console.error('Error: ', error));
+    .doesExist(blueprintID)
+    .then(exists => {
+      if(!exists) throw "task not found"
+    })
+    .then(
+      () => CompletedTask
+        .findOne()
+        .select({createdAt: true})
+        .sort({createdAt: -1})
+    )
+    .then(task => {
+      if(task && task.createdAt.toDateString() === (new Date).toDateString()){
+        throw "today's task is already completed"
+      }
+    })
+    .then(() => CompletedTask.add(blueprintID))
+    .then(task => res.json(task))
+    .catch(error => {
+      console.log(error)
+      res.json({error: error})
+    })
 }
+
 export function deleteSpecificCompletedTask(req, res){
   res.send('uncomplete a specific task')
 }

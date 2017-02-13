@@ -4,11 +4,33 @@ export function getAll(req, res){
   BlueprintTask
     .findAll()
     .then(tasks => res.json(tasks))
-    .catch(error => console.error('Error: ', error));
+    .catch(error => console.error('Error: ', error))
 }
-export function getSpecificTask(req, res){
-  res.send('info about specific task')
+
+export function getTask(req, res){
+  const blueprintID = req.params.blueprintID
+
+  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.json({
+      message: "id is malformed"
+    })
+  }
+
+  if (!blueprintID.length) {
+    return res.json({
+      message: "id is empty"
+    })
+  }
+
+  BlueprintTask
+    .get(blueprintID)
+    .then(x => res.json(x))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
 }
+
 export function createNewTask(req, res){
   const task = new BlueprintTask({
 	  title  : req.body.title,
@@ -19,8 +41,33 @@ export function createNewTask(req, res){
 	task
     .save()
   	.then((task) => res.json(task))
-  	.catch((error) => console.error('Error: ', error))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
 }
+
+//todo: rething and rewrite
 export function deleteSpecificTask(req, res){
-  res.send('delete a specific task')
+  const blueprintID = req.params.blueprintID
+
+  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.json({
+      message: "id is malformed"
+    })
+  }
+
+  if (!blueprintID.length) {
+    return res.json({
+      message: "id is empty"
+    })
+  }
+
+  BlueprintTask
+    .delete(blueprintID)
+    .then(x => res.json(x))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
 }
