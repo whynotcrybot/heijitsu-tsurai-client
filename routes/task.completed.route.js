@@ -3,9 +3,9 @@ import * as TaskCompletedLib from '../libs/task.completed.lib'
 
 const router = express.Router()
 
-router.get('/tasks/completed',                (x,y) => TaskCompletedLib.getAll(x,y))
-router.get('/task/completed/:completedID',    (x,y) => TaskCompletedLib.getTask(x,y))
-router.post('/task/completed/:blueprintID',   (x,y) => TaskCompletedLib.createNewCompletedTask(x,y))
-router.delete('/task/completed/:completedID', (x,y) => TaskCompletedLib.deleteSpecificCompletedTask(x,y))
+router.get('/completed',                 (x,y) => TaskCompletedLib.getAllCompleted(x,y))
+router.get('/completed/:completedID',    (x,y) => TaskCompletedLib.getCompleted(x,y))
+router.post('/completed/:blueprintID',   (x,y) => TaskCompletedLib.createCompleted(x,y))
+router.delete('/completed/:completedID', (x,y) => TaskCompletedLib.deleteCompleted(x,y))
 
 export default router
