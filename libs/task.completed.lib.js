@@ -1,14 +1,21 @@
 import BlueprintTask from '../models/task.blueprint.model.js'
 import CompletedTask from '../models/task.completed.model.js'
 
-export function getAll(req, res){
+export {
+  getAll,
+  getTask,
+  createNewCompletedTask,
+  deleteSpecificCompletedTask
+}
+
+function getAll(req, res){
   CompletedTask
     .findAll()
     .then(tasks => res.json(tasks))
     .catch(error => console.error('Error: ', error))
 }
 
-export function getTask(req, res){
+function getTask(req, res){
   const completedID = req.params.completedID
 
   if (!completedID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -32,7 +39,7 @@ export function getTask(req, res){
     })
 }
 
-export function createNewCompletedTask(req, res){
+function createNewCompletedTask(req, res){
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -71,6 +78,6 @@ export function createNewCompletedTask(req, res){
     })
 }
 
-export function deleteSpecificCompletedTask(req, res){
+function deleteSpecificCompletedTask(req, res){
   res.send('uncomplete a specific task')
 }

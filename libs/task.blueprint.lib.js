@@ -1,13 +1,20 @@
 import BlueprintTask from '../models/task.blueprint.model.js'
 
-export function getAll(req, res){
+export {
+  getAll,
+  getTask,
+  createNewTask,
+  deleteSpecificTask
+}
+
+function getAll(req, res){
   BlueprintTask
     .findAll()
     .then(tasks => res.json(tasks))
     .catch(error => console.error('Error: ', error))
 }
 
-export function getTask(req, res){
+function getTask(req, res){
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -31,7 +38,7 @@ export function getTask(req, res){
     })
 }
 
-export function createNewTask(req, res){
+function createNewTask(req, res){
   const task = new BlueprintTask({
 	  title  : req.body.title,
 		active : true,
@@ -48,7 +55,7 @@ export function createNewTask(req, res){
 }
 
 //todo: rething and rewrite
-export function deleteSpecificTask(req, res){
+function deleteSpecificTask(req, res){
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
