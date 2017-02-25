@@ -4,15 +4,20 @@ export {
   getAllBlueprints,
   getAvailableBlueprints,
   getBlueprint,
+  completeBlueprint,
   createBlueprint,
   deleteBlueprint
 }
 
 function getAllBlueprints(req, res){
   BlueprintTask
-    .findAll()
-    .then(tasks => res.json(tasks))
-    .catch(error => console.error('Error: ', error))
+    .find()
+    .lean()
+    .then(bps => res.json(bps))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
 }
 
 function getAvailableBlueprints(req, res){
@@ -43,16 +48,63 @@ function getBlueprint(req, res){
     })
 }
 
+function completeBlueprint(req, res){
+  const blueprintID = req.params.blueprintID
+
+  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.json({
+      message: "id is malformed"
+    })
+  }
+
+  if (!blueprintID.length) {
+    return res.json({
+      message: "id is empty"
+    })
+  }
+
+  BlueprintTask
+    .findOne({_id : blueprintID})
+    //does exist?
+    .then(bp => {
+      if(bp) return bp
+      else throw "blueprint not found"
+    })
+    //is active?
+    .then(bp => {
+      if(bp.active) return bp
+      else throw "blueprint is not active"
+    })
+    //was not completed today?
+    .then(bp => {
+      if(bp.completed.length){
+        const lastCompletedTask = bp.completed[bp.completed.length-1]
+        const lastCompletedAt = lastCompletedTask.completedAt.toDateString()
+        const currentDate = (new Date).toDateString()
+
+        if(lastCompletedAt === currentDate)
+          throw "today's task is already completed"
+      }
+      return bp
+    })
+    .then(bp => bp.complete())
+    .then(bp => bp.save())
+    .then(bp => res.json(bp))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
+}
+
 function createBlueprint(req, res){
-  const task = new BlueprintTask({
+  const blueprint = new BlueprintTask({
 	  title  : req.body.title,
-		active : true,
 		type	 : req.body.type
 	});
 
-	task
+	blueprint
     .save()
-  	.then((task) => res.json(task))
+  	.then(bp => res.json(bp))
     .catch(error => {
       console.error("Error:", error)
       res.json({error})
@@ -76,7 +128,7 @@ function deleteBlueprint(req, res){
   }
 
   BlueprintTask
-    .delete(blueprintID)
+    .findOneAndRemove({_id : blueprintID})
     .then(x => res.json(x))
     .catch(error => {
       console.error("Error:", error)

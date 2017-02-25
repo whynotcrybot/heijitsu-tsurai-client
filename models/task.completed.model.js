@@ -3,16 +3,12 @@ import q from 'q'
 
 mongoose.Promise = q.Promise
 
-const completedSchema = new mongoose.Schema(
+const completedTaskSchema = new mongoose.Schema(
   {
-    _blueprint : { type: mongoose.Schema.Types.ObjectId, ref: 'BlueprintTask' },
-    createdAt  : { type: Date, default: Date.now }
-  },
-  {
-    collection: 'task.completed'
+    completedAt : { type: Date, default: Date.now }
   }
 )
-completedSchema.statics = {
+completedTaskSchema.statics = {
   findAll: function(){
     return this
       .find()
@@ -27,5 +23,9 @@ completedSchema.statics = {
     return this.create({_blueprint : blueprintID})
   }
 }
+const CompletedTask = mongoose.model('CompletedTask', completedTaskSchema)
 
-export default mongoose.model('CompletedTask', completedSchema)
+export {
+  completedTaskSchema,
+  CompletedTask
+}
