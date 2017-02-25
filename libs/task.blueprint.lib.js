@@ -10,18 +10,13 @@ export {
 
 function getAllBlueprints(req, res){
   BlueprintTask
-    .find()
-    .lean()
+    .findAll()
     .then(tasks => res.json(tasks))
     .catch(error => console.error('Error: ', error))
 }
 
-//TODO: continue in appropriate branch
 function getAvailableBlueprints(req, res){
-/*  BlueprintTask
-    .findAvailable()
-    .then(tasks => res.json(tasks))
-    .catch(error => console.error('Error: ', error))*/
+
 }
 
 function getBlueprint(req, res){

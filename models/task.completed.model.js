@@ -16,18 +16,12 @@ completedSchema.statics = {
   findAll: function(){
     return this
       .find()
-      .lean()
       .populate('_blueprint')
   },
   get: function(completedID){
     return this
       .findOne({_id : completedID})
       .populate('_blueprint')
-  },
-  getByBlueprint: function(blueprintID){
-    return this
-      .find({_blueprint : blueprintID})
-      .lean()
   },
   add: function(blueprintID){
     return this.create({_blueprint : blueprintID})

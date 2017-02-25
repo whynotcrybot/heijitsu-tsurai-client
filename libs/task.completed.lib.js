@@ -55,17 +55,10 @@ function createCompleted(req, res){
   }
 
   BlueprintTask
-    //check for existence
     .doesExist(blueprintID)
     .then(exists => {
       if(!exists) throw "task not found"
     })
-    //check for availability
-    /*.isActive(blueprintID)
-    .then(active => {
-      if(!active) throw "task is not active"
-    })*/
-    //proceed
     .then(
       () => CompletedTask
         .findOne()
