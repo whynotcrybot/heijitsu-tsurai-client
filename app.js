@@ -8,7 +8,7 @@ const app = express()
 app.use(bodyParser.json());
 app.use('/', TaskBlueprint)
 
-mongoose.connect('mongodb://localhost/heijitu-tsurai');
+mongoose.connect('mongodb://mongo/heijitsu-tsurai');
 
 app.listen(8090, () => {
   console.log('server is ready on 8090')
