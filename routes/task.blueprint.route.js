@@ -1,5 +1,5 @@
 import express from 'express'
-import * as TaskBlueprintLib from '../libs/task.blueprint.lib'
+import * as TaskBlueprintLib from '../controllers/task.blueprint.controller'
 
 const router = express.Router()
 
@@ -14,6 +14,9 @@ router.get('/blueprint/:blueprintID',
 
 router.post('/blueprint/:blueprintID/complete',
   (x,y) => TaskBlueprintLib.completeBlueprint(x,y))
+
+router.post('/blueprint/:blueprintID/uncomplete',
+  (x,y) => TaskBlueprintLib.uncompleteBlueprint(x,y))
 
 router.post('/blueprint',
   (x,y) => TaskBlueprintLib.createBlueprint(x,y))

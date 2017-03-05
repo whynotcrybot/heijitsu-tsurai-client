@@ -1,5 +1,5 @@
 import express from 'express'
-import * as TaskCompletedLib from '../libs/task.completed.lib'
+import * as TaskCompletedLib from '../controllers/task.completed.controller'
 
 const router = express.Router()
 

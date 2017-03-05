@@ -5,6 +5,7 @@ export {
   getAvailableBlueprints,
   getBlueprint,
   completeBlueprint,
+  uncompleteBlueprint,
   createBlueprint,
   deleteBlueprint
 }
@@ -13,7 +14,7 @@ function getAllBlueprints(req, res){
   BlueprintTask
     .find()
     .lean()
-    .then(bps => res.json(bps))
+    .then(blueprints => res.json(blueprints))
     .catch(error => {
       console.error("Error:", error)
       res.json({error})
@@ -21,7 +22,16 @@ function getAllBlueprints(req, res){
 }
 
 function getAvailableBlueprints(req, res){
-
+  BlueprintTask
+    .find({'active': true})
+    .slice('completed', -1)
+    .lean()
+    .filter(bp => bp)
+    .then(blueprints => res.json(blueprints))
+    .catch(error => {
+      console.error("Error:", error)
+      res.json({error})
+    })
 }
 
 function getBlueprint(req, res){
@@ -94,6 +104,24 @@ function completeBlueprint(req, res){
       console.error("Error:", error)
       res.json({error})
     })
+}
+
+function uncompleteBlueprint(req, res){
+  const blueprintID = req.params.blueprintID
+
+  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.json({
+      message: "id is malformed"
+    })
+  }
+
+  if (!blueprintID.length) {
+    return res.json({
+      message: "id is empty"
+    })
+  }
+
+  //todo: complete
 }
 
 function createBlueprint(req, res){
