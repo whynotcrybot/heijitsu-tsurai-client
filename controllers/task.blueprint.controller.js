@@ -139,7 +139,6 @@ function createBlueprint(req, res){
     })
 }
 
-//todo: rething and rewrite
 function deleteBlueprint(req, res){
   const blueprintID = req.params.blueprintID
 
@@ -157,7 +156,12 @@ function deleteBlueprint(req, res){
 
   BlueprintTask
     .findOneAndRemove({_id : blueprintID})
-    .then(x => res.json(x))
+    //does exist?
+    .then(bp => {
+      if(bp) return bp
+      else throw "blueprint not found"
+    })
+    .then(() => res.json({message: "success"}))
     .catch(error => {
       console.error("Error:", error)
       res.json({error})
