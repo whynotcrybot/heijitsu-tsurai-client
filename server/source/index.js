@@ -1,5 +1,6 @@
 import express from 'express'
-import mongoose from 'mongoose'
+
+import './config/database'
 
 import applyMiddlewares from './config/middlewares'
 import constants from './config/constants'
@@ -12,8 +13,6 @@ applyMiddlewares(app)
 
 app.use('/', TaskBlueprint)
 app.use('/', Timeline)
-
-mongoose.connect('mongodb://mongo/heijitsu-tsurai')
 
 // http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
 if (!module.parent) {
