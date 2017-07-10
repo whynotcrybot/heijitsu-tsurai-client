@@ -1,0 +1,29 @@
+version: '2'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - /srv/docker/mongodb:/data/db
+    ports:
+      - "27017:27017"
+    restart: always
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+    ports:
+      - "8090:3000"
+    command: yarn dev
+  # client:
+  #   build: ./heijitsu-tsurai-client
+  #   volumes:
+  #     - ./heijitsu-tsurai-client:/app
+  #     - /app/node_modules
+  #   ports:
+  #     - "8080:8080"
