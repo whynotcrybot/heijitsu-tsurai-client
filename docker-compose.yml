@@ -20,6 +20,8 @@ services:
     ports:
       - "8090:3000"
     command: yarn dev
+    env_file:
+      - ./server/.env
   # client:
   #   build: ./heijitsu-tsurai-client
   #   volumes:

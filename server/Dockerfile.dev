@@ -12,8 +12,6 @@ RUN yarn --pure-lockfile
 
 RUN yarn add nodemon
 
-COPY . /app
-
 EXPOSE 3000
 
 # cmd to start service
