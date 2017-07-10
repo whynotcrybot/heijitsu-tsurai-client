@@ -4,15 +4,12 @@ import './config/database'
 
 import applyMiddlewares from './config/middlewares'
 import constants from './config/constants'
-
-import TaskBlueprint from './routes/task.blueprint.route'
-import Timeline from './routes/timeline.route'
+import routes from './routes'
 
 const app = express()
 applyMiddlewares(app)
 
-app.use('/', TaskBlueprint)
-app.use('/', Timeline)
+app.use('/', routes)
 
 // http://www.marcusoft.net/2015/10/eaddrinuse-when-watching-tests-with-mocha-and-supertest.html
 if (!module.parent) {

@@ -1,9 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
 import * as Timeline from '../controllers/timeline.controller'
 
-const router = express.Router()
+const router = new Router()
 
-router.get('/timeline',
-  (x,y) => Timeline.getTimeline(x,y))
+router.get('/',
+  (x, y) => Timeline.getTimeline(x, y))
 
 export default router
