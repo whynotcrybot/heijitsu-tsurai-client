@@ -1,8 +1,5 @@
 import mongoose from 'mongoose'
-import q from 'q'
 import {completedTaskSchema, CompletedTask} from '../models/task.completed.model.js'
-
-mongoose.Promise = q.Promise
 
 const blueprintSchema = new mongoose.Schema(
   {

@@ -1,16 +1,6 @@
 import BlueprintTask from '../models/task.blueprint.model.js'
 
-export {
-  getAllBlueprints,
-  getAvailableBlueprints,
-  getBlueprint,
-  completeBlueprint,
-  uncompleteBlueprint,
-  createBlueprint,
-  deleteBlueprint
-}
-
-function getAllBlueprints(req, res){
+export function getAllBlueprints (req, res) {
   BlueprintTask
     .find()
     .lean()
@@ -21,7 +11,7 @@ function getAllBlueprints(req, res){
     })
 }
 
-function getAvailableBlueprints(req, res){
+export function getAvailableBlueprints (req, res) {
   BlueprintTask
     .find({'active': true})
     .slice('completed', -1)
@@ -34,7 +24,7 @@ function getAvailableBlueprints(req, res){
     })
 }
 
-function getBlueprint(req, res){
+export function getBlueprint (req, res) {
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -58,7 +48,7 @@ function getBlueprint(req, res){
     })
 }
 
-function completeBlueprint(req, res){
+export function completeBlueprint (req, res) {
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -106,7 +96,7 @@ function completeBlueprint(req, res){
     })
 }
 
-function uncompleteBlueprint(req, res){
+export function uncompleteBlueprint (req, res) {
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -124,7 +114,7 @@ function uncompleteBlueprint(req, res){
   //todo: complete
 }
 
-function createBlueprint(req, res){
+export function createBlueprint (req, res) {
   const blueprint = new BlueprintTask({
 	  title  : req.body.title,
 		type	 : req.body.type
@@ -139,7 +129,7 @@ function createBlueprint(req, res){
     })
 }
 
-function deleteBlueprint(req, res){
+export function deleteBlueprint (req, res) {
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {

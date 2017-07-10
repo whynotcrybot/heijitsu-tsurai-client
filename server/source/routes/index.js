@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import HealthyRoute from './healthy.route'
-import TaskBlueprintRoute from './task.blueprint.route'
+import TaskBlueprintRoute from './blueprint.route'
 import TimelineRoute from './timeline.route'
 
 const router = new Router()

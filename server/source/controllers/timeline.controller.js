@@ -1,10 +1,6 @@
 import BlueprintTask from '../models/task.blueprint.model.js'
 
-export {
-  getTimeline
-}
-
-function getTimeline(req, res){
+export function getTimeline (req, res) {
   //todo: understand and rewrite this function
   function getClosestMonday(d = new Date().setHours(0,0,0,0)) {
     d = new Date(d)

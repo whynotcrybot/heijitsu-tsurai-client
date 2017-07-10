@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import q from 'q'
 
 const completedTaskSchema = new mongoose.Schema(
   {
