@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.use('/', TaskBlueprint)
 app.use('/', Timeline)
 
-mongoose.connect('mongodb://mongo/heijitsu-tsurai');
+mongoose.connect('mongodb://mongo/heijitsu-tsurai')
 
 app.listen(8090, () => {
   console.log('server is ready on 8090')
