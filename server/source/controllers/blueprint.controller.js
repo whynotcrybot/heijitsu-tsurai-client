@@ -139,31 +139,14 @@ export async function createBlueprint (req, res, next) {
   }
 }
 
-export function deleteBlueprint (req, res) {
-  const blueprintID = req.params.blueprintID
+export async function deleteBlueprint (req, res, next) {
+  try {
+    const blueprint = await BlueprintTask.findById(req.params.blueprintID)
 
-  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.json({
-      message: "id is malformed"
-    })
+    await blueprint.remove()
+    return res.sendStatus(HTTPStatus.OK)
+  } catch (err) {
+    err.status = HTTPStatus.BAD_REQUEST
+    return next(err)
   }
-
-  if (!blueprintID.length) {
-    return res.json({
-      message: "id is empty"
-    })
-  }
-
-  BlueprintTask
-    .findOneAndRemove({_id : blueprintID})
-    //does exist?
-    .then(bp => {
-      if(bp) return bp
-      else throw "blueprint not found"
-    })
-    .then(() => res.json({message: "success"}))
-    .catch(error => {
-      console.error("Error:", error)
-      res.json({error})
-    })
 }
