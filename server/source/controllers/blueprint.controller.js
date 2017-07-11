@@ -128,10 +128,8 @@ export function uncompleteBlueprint (req, res) {
 }
 
 export async function createBlueprint (req, res, next) {
-  const body = req.body
-
   try {
-    const blueprint = await BlueprintTask.create(body)
+    const blueprint = await BlueprintTask.create(req.body)
     return res.status(HTTPStatus.CREATED).json(blueprint)
   } catch (e) {
     e.status = HTTPStatus.BAD_REQUEST
