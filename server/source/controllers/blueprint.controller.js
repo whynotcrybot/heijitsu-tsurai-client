@@ -1,14 +1,27 @@
+import Joi from 'joi'
+import HTTPStatus from 'http-status'
+
 import BlueprintTask from '../models/task.blueprint.model.js'
 
-export function getAllBlueprints (req, res) {
-  BlueprintTask
-    .find()
-    .lean()
-    .then(blueprints => res.json(blueprints))
-    .catch(error => {
-      console.error("Error:", error)
-      res.json({error})
-    })
+export const validation = {
+  createBlueprint: {
+    options: {
+      allowUnknownBody: false
+    },
+    body: {
+      title: Joi.string().required(),
+      type: Joi.string().only(['singular', 'repeating'])
+    }
+  }
+}
+
+export async function getAllBlueprints (req, res, next) {
+  try {
+    return res.json(await BlueprintTask.find())
+  } catch (e) {
+    e.status = HTTPStatus.BAD_REQUEST
+    return next(e)
+  }
 }
 
 export function getAvailableBlueprints (req, res) {
@@ -114,19 +127,16 @@ export function uncompleteBlueprint (req, res) {
   //todo: complete
 }
 
-export function createBlueprint (req, res) {
-  const blueprint = new BlueprintTask({
-	  title  : req.body.title,
-		type	 : req.body.type
-	});
+export async function createBlueprint (req, res, next) {
+  const body = req.body
 
-	blueprint
-    .save()
-  	.then(bp => res.json(bp))
-    .catch(error => {
-      console.error("Error:", error)
-      res.json({error})
-    })
+  try {
+    const blueprint = await BlueprintTask.create(body)
+    return res.status(HTTPStatus.CREATED).json(blueprint)
+  } catch (e) {
+    e.status = HTTPStatus.BAD_REQUEST
+    return next(e)
+  }
 }
 
 export function deleteBlueprint (req, res) {
