@@ -15,9 +15,17 @@ router.get(
   BlueprintConroller.getBlueprint
 )
 
-router.post('/:blueprintID/complete', BlueprintConroller.completeBlueprint)
+router.post(
+  '/:blueprintID/complete',
+  validate(BlueprintConroller.validation.correctBlueprintId),
+  BlueprintConroller.completeBlueprint
+)
 
-router.post('/:blueprintID/uncomplete', BlueprintConroller.uncompleteBlueprint)
+router.post(
+  '/:blueprintID/uncomplete',
+  validate(BlueprintConroller.validation.correctBlueprintId),
+  BlueprintConroller.uncompleteBlueprint
+)
 
 router.post(
   '/',

@@ -75,22 +75,27 @@ export async function completeBlueprint (req, res, next) {
   }
 }
 
-export function uncompleteBlueprint (req, res) {
-  const blueprintID = req.params.blueprintID
+export async function uncompleteBlueprint (req, res, next) {
+  try {
+    const blueprint = await BlueprintTask.findById(req.params.blueprintID)
+      .select({completed: {$slice: -1}})
+      .populate('completed')
 
-  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.json({
-      message: "id is malformed"
-    })
+    if (!blueprint.active) {
+      return res.status(HTTPStatus.BAD_REQUEST).send('task is not active')
+    }
+
+    if (!blueprint.wasCompletedToday()) {
+      return res.status(HTTPStatus.BAD_REQUEST).send('task was not completed today')
+    }
+
+    await blueprint.uncomplete()
+
+    return res.sendStatus(HTTPStatus.OK)
+  } catch (err) {
+    err.status = HTTPStatus.BAD_REQUEST
+    return next(err)
   }
-
-  if (!blueprintID.length) {
-    return res.json({
-      message: "id is empty"
-    })
-  }
-
-  //todo: complete
 }
 
 export async function createBlueprint (req, res, next) {

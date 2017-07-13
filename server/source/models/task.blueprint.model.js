@@ -33,6 +33,16 @@ BlueprintTaskSchema.methods = {
     }
   },
 
+  async uncomplete () {
+    try {
+      this.completed.pop()
+
+      return this.save()
+    } catch (err) {
+      return err
+    }
+  },
+
   wasCompletedToday () {
     if (!this.completed.length) return false
 
