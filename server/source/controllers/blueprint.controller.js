@@ -10,7 +10,7 @@ export const validation = {
     // },
     body: {
       title: Joi.string().required()
-      //type: Joi.string().only(['singular', 'repeating'])
+      // type: Joi.string().only(['singular', 'repeating'])
     }
   }
 }
