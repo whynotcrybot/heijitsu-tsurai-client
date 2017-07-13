@@ -5,12 +5,11 @@ import BlueprintTask from '../models/task.blueprint.model.js'
 
 export const validation = {
   createBlueprint: {
-    // options: {
-    //   allowUnknownBody: false
-    // },
+    options: {
+      allowUnknownBody: false
+    },
     body: {
       title: Joi.string().required()
-      // type: Joi.string().only(['singular', 'repeating'])
     }
   },
   correctBlueprintId: {
@@ -52,7 +51,6 @@ export async function getBlueprint (req, res, next) {
     return next(err)
   }
 }
-
 
 export async function completeBlueprint (req, res, next) {
   try {

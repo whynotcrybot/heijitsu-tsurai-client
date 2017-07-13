@@ -9,10 +9,6 @@ const BlueprintTaskSchema = new Schema({
     type: Boolean,
     default: true
   },
-  // type: {
-  //   type: String,
-  //   enum: ['repeating', 'singular']
-  // },
   completed: [{
     type: Schema.Types.ObjectId,
     ref: 'CompletedTask'
