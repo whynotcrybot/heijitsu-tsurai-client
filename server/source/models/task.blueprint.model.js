@@ -49,11 +49,15 @@ BlueprintTaskSchema.methods = {
 }
 
 BlueprintTaskSchema.statics = {
-  async findAll () {
+  async findBlueprint (id) {
+    return await this.findById(id)
+       .populate('completed')
+  },
+  async findAllBlueprints () {
     return this.find()
       .populate('completed')
   },
-  async findAvailable () {
+  async findAvailableBlueprints () {
     const blueprints = await this.find({active: true})
       .slice('completed', -1)
       .populate('completed')

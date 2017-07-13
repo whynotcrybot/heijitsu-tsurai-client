@@ -22,7 +22,7 @@ export const validation = {
 
 export async function getAllBlueprints (req, res, next) {
   try {
-    return res.json(await BlueprintTask.findAll())
+    return res.json(await BlueprintTask.findAllBlueprints())
   } catch (e) {
     e.status = HTTPStatus.BAD_REQUEST
     return next(e)
@@ -31,36 +31,28 @@ export async function getAllBlueprints (req, res, next) {
 
 export async function getAvailableBlueprints (req, res, next) {
   try {
-    return res.json(await BlueprintTask.findAvailable())
+    return res.json(await BlueprintTask.findAvailableBlueprints())
   } catch (e) {
     e.status = HTTPStatus.BAD_REQUEST
     return next(e)
   }
 }
 
-export function getBlueprint (req, res) {
-  const blueprintID = req.params.blueprintID
+export async function getBlueprint (req, res, next) {
+  try {
+    const blueprint = await BlueprintTask.findBlueprint(req.params.blueprintID)
 
-  if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
-    return res.json({
-      message: "id is malformed"
-    })
+    if (!blueprint) {
+      return res.sendStatus(HTTPStatus.NOT_FOUND)
+    }
+
+    return res.status(HTTPStatus.OK).json(blueprint)
+  } catch (err) {
+    err.status = HTTPStatus.BAD_REQUEST
+    return next(err)
   }
-
-  if (!blueprintID.length) {
-    return res.json({
-      message: "id is empty"
-    })
-  }
-
-  BlueprintTask
-    .get(blueprintID)
-    .then(x => res.json(x))
-    .catch(error => {
-      console.error("Error:", error)
-      res.json({error})
-    })
 }
+
 
 export async function completeBlueprint (req, res, next) {
   try {
