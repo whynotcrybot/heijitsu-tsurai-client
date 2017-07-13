@@ -12,6 +12,11 @@ export const validation = {
       title: Joi.string().required()
       // type: Joi.string().only(['singular', 'repeating'])
     }
+  },
+  correctBlueprintId: {
+    params: {
+      blueprintID: Joi.string().alphanum().length(24).required()
+    }
   }
 }
 
@@ -111,6 +116,10 @@ export async function createBlueprint (req, res, next) {
 export async function deleteBlueprint (req, res, next) {
   try {
     const blueprint = await BlueprintTask.findById(req.params.blueprintID)
+
+    if (!blueprint) {
+      return res.sendStatus(HTTPStatus.NOT_FOUND)
+    }
 
     await blueprint.remove()
     return res.sendStatus(HTTPStatus.OK)

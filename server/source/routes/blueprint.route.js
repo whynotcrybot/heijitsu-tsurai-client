@@ -9,7 +9,11 @@ router.get('/', BlueprintConroller.getAllBlueprints)
 
 router.get('/available', BlueprintConroller.getAvailableBlueprints)
 
-router.get('/:blueprintID', BlueprintConroller.getBlueprint)
+router.get(
+  '/:blueprintID',
+  validate(BlueprintConroller.validation.correctBlueprintId),
+  BlueprintConroller.getBlueprint
+)
 
 router.post('/:blueprintID/complete', BlueprintConroller.completeBlueprint)
 
@@ -21,6 +25,10 @@ router.post(
   BlueprintConroller.createBlueprint
 )
 
-router.delete('/:blueprintID', BlueprintConroller.deleteBlueprint)
+router.delete(
+  '/:blueprintID',
+  validate(BlueprintConroller.validation.correctBlueprintId),
+  BlueprintConroller.deleteBlueprint
+)
 
 export default router
