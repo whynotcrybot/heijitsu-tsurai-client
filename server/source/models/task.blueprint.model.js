@@ -9,10 +9,10 @@ const BlueprintTaskSchema = new Schema({
     type: Boolean,
     default: true
   },
-  type: {
-    type: String,
-    enum: ['repeating', 'singular']
-  },
+  // type: {
+  //   type: String,
+  //   enum: ['repeating', 'singular']
+  // },
   completed: [{
     type: Schema.Types.ObjectId,
     ref: 'CompletedTask'
@@ -35,20 +35,30 @@ BlueprintTaskSchema.methods = {
     } catch (err) {
       return err
     }
+  },
+
+  wasCompletedToday () {
+    if (!this.completed.length) return false
+
+    const lastCompletedTask = this.completed[this.completed.length - 1]
+    const lastCompletedAt = lastCompletedTask.completedAt.toDateString()
+    const currentDate = new Date().toDateString()
+
+    return (lastCompletedAt === currentDate)
   }
 }
 
 BlueprintTaskSchema.statics = {
-  doesExist: function (blueprintID) {
-    return this
-      .count({_id: blueprintID})
-      .then(count => count ? true : false)
+  async findAll () {
+    return this.find()
+      .populate('completed')
   },
-
-  findAvailable: function () {
-    return this.find({active: true})
+  async findAvailable () {
+    const blueprints = await this.find({active: true})
       .slice('completed', -1)
-      .lean()
+      .populate('completed')
+
+    return blueprints.filter(bp => !bp.wasCompletedToday())
   }
 }
 
