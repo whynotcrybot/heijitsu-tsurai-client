@@ -1,35 +1,63 @@
-import mongoose from 'mongoose'
-import {completedTaskSchema, CompletedTask} from '../models/task.completed.model.js'
+import mongoose, { Schema } from 'mongoose'
+import CompletedTask from '../models/task.completed.model.js'
 
-const blueprintSchema = new mongoose.Schema(
-  {
-    title           : { type: String },
-    active          : { type: Boolean, default: true },
-    type            : { type: String, enum: ['continuous', 'singular'] },
-    completed       : [completedTaskSchema],
-    createdAt       : { type: Date, default: Date.now },
-    updatedAt       : { type: Date, default: Date.now }
+const BlueprintTaskSchema = new Schema({
+  title: {
+    type: String
   },
-  {
-    collection: 'task.blueprints'
+  active: {
+    type: Boolean,
+    default: true
+  },
+  type: {
+    type: String,
+    enum: ['repeating', 'singular']
+  },
+  completed: [{
+    type: Schema.Types.ObjectId,
+    ref: 'CompletedTask'
+  }],
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
-)
-blueprintSchema.methods = {
-  complete: function(cb){
-    this.completed.push(new CompletedTask())
-    return this
+})
+
+BlueprintTaskSchema.methods = {
+  async complete () {
+    try {
+      this.completed.push(await new CompletedTask().save())
+      return this.save()
+    } catch (err) {
+      return err
+    }
   }
 }
 
-blueprintSchema.statics = {
-  get: function(blueprintID){
-    return this.findOne({_id : blueprintID})
-  },
-  doesExist: function(blueprintID){
+BlueprintTaskSchema.statics = {
+  doesExist: function (blueprintID) {
     return this
-      .count({_id : blueprintID})
+      .count({_id: blueprintID})
       .then(count => count ? true : false)
+  },
+
+  findAvailable: function () {
+    return this.find({active: true})
+      .slice('completed', -1)
+      .lean()
   }
 }
 
-export default mongoose.model('BlueprintTask', blueprintSchema)
+let BlueprintTask
+
+try {
+  BlueprintTask = mongoose.model('BlueprintTask')
+} catch (e) {
+  BlueprintTask = mongoose.model('BlueprintTask', BlueprintTaskSchema)
+}
+
+export default BlueprintTask

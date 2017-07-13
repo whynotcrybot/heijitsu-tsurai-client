@@ -17,24 +17,20 @@ export const validation = {
 
 export async function getAllBlueprints (req, res, next) {
   try {
-    return res.json(await BlueprintTask.find())
+    return res.json(await BlueprintTask.find().populate('completed'))
   } catch (e) {
     e.status = HTTPStatus.BAD_REQUEST
     return next(e)
   }
 }
 
-export function getAvailableBlueprints (req, res) {
-  BlueprintTask
-    .find({'active': true})
-    .slice('completed', -1)
-    .lean()
-    .filter(bp => bp)
-    .then(blueprints => res.json(blueprints))
-    .catch(error => {
-      console.error("Error:", error)
-      res.json({error})
-    })
+export async function getAvailableBlueprints (req, res, next) {
+  try {
+    return res.json(await BlueprintTask.findAvailable())
+  } catch (e) {
+    e.status = HTTPStatus.BAD_REQUEST
+    return next(e)
+  }
 }
 
 export function getBlueprint (req, res) {
@@ -61,7 +57,7 @@ export function getBlueprint (req, res) {
     })
 }
 
-export function completeBlueprint (req, res) {
+export function completeBlueprint1 (req, res) {
   const blueprintID = req.params.blueprintID
 
   if (!blueprintID.match(/^[0-9a-fA-F]{24}$/)) {
@@ -107,6 +103,35 @@ export function completeBlueprint (req, res) {
       console.error("Error:", error)
       res.json({error})
     })
+}
+
+export async function completeBlueprint (req, res, next) {
+  try {
+    const blueprint = await BlueprintTask.findById(req.params.blueprintID)
+      .select({completed: {$slice: -1}})
+      .populate('completed')
+
+    if (!blueprint.active) {
+      return res.status(HTTPStatus.BAD_REQUEST).send('task is not active')
+    }
+
+    if (blueprint.completed.length) {
+      const lastCompletedTask = blueprint.completed[blueprint.completed.length - 1]
+      const lastCompletedAt = lastCompletedTask.completedAt.toDateString()
+      const currentDate = new Date().toDateString()
+
+      if (lastCompletedAt === currentDate) {
+        return res.status(HTTPStatus.BAD_REQUEST).send('task is completed today')
+      }
+    }
+
+    await blueprint.complete()
+
+    return res.sendStatus(HTTPStatus.OK)
+  } catch (err) {
+    err.status = HTTPStatus.BAD_REQUEST
+    return next(err)
+  }
 }
 
 export function uncompleteBlueprint (req, res) {

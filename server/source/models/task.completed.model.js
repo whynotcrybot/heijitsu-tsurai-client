@@ -1,14 +1,15 @@
 import mongoose from 'mongoose'
 
-const completedTaskSchema = new mongoose.Schema(
-  {
-    completedAt : { type: Date, default: Date.now }
-  }
-)
+const CompletedTaskSchema = new mongoose.Schema({
+  completedAt: { type: Date, default: Date.now }
+})
 
-const CompletedTask = mongoose.model('CompletedTask', completedTaskSchema)
+let CompletedTask
 
-export {
-  completedTaskSchema,
-  CompletedTask
+try {
+  CompletedTask = mongoose.model('CompletedTask')
+} catch (e) {
+  CompletedTask = mongoose.model('CompletedTask', CompletedTaskSchema)
 }
+
+export default CompletedTask
