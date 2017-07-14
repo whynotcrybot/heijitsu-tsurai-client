@@ -33,10 +33,14 @@ services:
     command: yarn dev
     env_file:
       - ./server/.env
-  # client:
-  #   build: ./heijitsu-tsurai-client
-  #   volumes:
-  #     - ./heijitsu-tsurai-client:/app
-  #     - /app/node_modules
-  #   ports:
-  #     - "8080:8080"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: yarn dev
