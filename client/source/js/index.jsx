@@ -1,14 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose } from 'redux'
-import thunk from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk'
+import { apiMiddleware } from 'redux-api-middleware'
 import { createLogger } from 'redux-logger'
 import rootReducer from './ducks'
 import App from './pages/app'
 
 // Store
 const middleware = [
-  thunk
+  apiMiddleware,
+  thunkMiddleware
 ].concat(process.env.IS_DEV ? [createLogger({collapsed: true})] : [])
 
 const enhancer = compose(

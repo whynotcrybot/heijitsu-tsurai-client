@@ -1,8 +1,12 @@
 import React from 'react'
-
+import { connect } from 'react-redux'
 import { Flex, Box } from 'reflexbox'
 
-const Home = () => {
+import { fetchBlueprints } from 'ducks/blueprints.duck'
+
+const Home = (props) => {
+  props.fetchBlueprints()
+
   return (
     <Flex justify='center'>
       <Box w={2 / 3}>
@@ -12,4 +16,13 @@ const Home = () => {
   )
 }
 
-export default Home
+export default connect(
+  function (state) {
+    return {}
+  },
+  function (dispatch) {
+    return {
+      fetchBlueprints: () => dispatch(fetchBlueprints())
+    }
+  }
+)(Home)

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
+import blueprints from './blueprints.duck'
 
 const rootReducer = combineReducers({
-  counter: counter
+  blueprints
 })
 
 export default rootReducer
