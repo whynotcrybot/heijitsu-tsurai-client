@@ -1,5 +1,6 @@
 version: '2'
 services:
+
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -8,6 +9,16 @@ services:
     ports:
       - "27017:27017"
     restart: always
+
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+    depends_on:
+      - mongo
+    ports:
+      - "8091:3000"
+    environment:
+      - MONGO_URL=mongodb://mongo/heijitsu-tsurai-dev
+
   server:
     build:
       context: ./server
