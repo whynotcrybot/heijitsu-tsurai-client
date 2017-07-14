@@ -4,21 +4,31 @@ import { Flex, Box } from 'reflexbox'
 
 import { fetchBlueprints } from 'ducks/blueprints.duck'
 
-const Home = (props) => {
-  props.fetchBlueprints()
+class Home extends React.Component {
+  componentDidMount () {
+    this.props.fetchBlueprints()
+  }
 
-  return (
-    <Flex justify='center'>
-      <Box w={2 / 3}>
-        <h2>Home</h2>
-      </Box>
-    </Flex>
-  )
+  render () {
+    const { blueprints } = this.props
+    return (
+      <Flex justify='center'>
+        <Box w={2 / 3}>
+          <h2>Blueprints</h2>
+          <ul>
+            {blueprints.map(blueprint => <li key={blueprint._id}>{blueprint.title}</li>)}
+          </ul>
+        </Box>
+      </Flex>
+    )
+  }
 }
 
 export default connect(
   function (state) {
-    return {}
+    return {
+      blueprints: state.blueprints.blueprints
+    }
   },
   function (dispatch) {
     return {
