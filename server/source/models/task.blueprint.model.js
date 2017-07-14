@@ -93,7 +93,7 @@ BlueprintTaskSchema.statics = {
         as: 'completed'
       }},
       {$unwind: '$completed'},
-      {$match: {'completed.completedAt': {$gt: monday }}},
+      {$match: {'completed.completedAt': {$gt: monday}}},
       {$group: {
         _id: '$_id',
         title: { $first: '$title' },
