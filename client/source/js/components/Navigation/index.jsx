@@ -9,7 +9,7 @@ const Item = (props) => {
     <NavLink
       exact
       activeStyle={{color: 'black', fontWeight: 'bold'}}
-      className={styles.navigationItem}
+      className={styles.item}
       to={props.to}
     >
       {props.children}
@@ -24,7 +24,7 @@ const Wrapper = (props) => {
       justify='center'
     >
       <Box
-        className={styles.navigationWrapper}
+        className={styles.wrapper}
         w={1 / 2}
       >
         {props.children}
