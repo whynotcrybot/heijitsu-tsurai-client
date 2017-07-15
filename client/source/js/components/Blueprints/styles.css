@@ -1,0 +1,8 @@
+.blueprints-wrapper {
+  padding: 5px 0;
+}
+
+.blueprint {
+  padding: 10px;
+  outline: 1px solid black;
+}
