@@ -4,11 +4,25 @@ const FETCH_BLUEPRINTS = 'FETCH_BLUEPRINTS'
 const FETCH_BLUEPRINTS_SUCCESS = 'FETCH_BLUEPRINTS_SUCCESS'
 const FETCH_BLUEPRINTS_FAILURE = 'FETCH_BLUEPRINTS_FAILURE'
 
+const ADD_BLUEPRINT = 'ADD_BLUEPRINT'
+const ADD_BLUEPRINT_SUCCESS = 'ADD_BLUEPRINT_SUCCESS'
+const ADD_BLUEPRINT_FAILURE = 'ADD_BLUEPRINT_FAILURE'
+
 export const fetchBlueprints = () => ({
   [CALL_API]: {
     types: [FETCH_BLUEPRINTS, FETCH_BLUEPRINTS_SUCCESS, FETCH_BLUEPRINTS_FAILURE],
     endpoint: 'http://localhost:8090/blueprints',
     method: 'GET'
+  }
+})
+
+export const addBlueprint = (data) => ({
+  [CALL_API]: {
+    types: [ADD_BLUEPRINT, ADD_BLUEPRINT_SUCCESS, ADD_BLUEPRINT_FAILURE],
+    endpoint: 'http://localhost:8090/blueprints',
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(data)
   }
 })
 
@@ -39,6 +53,17 @@ export default function blueprintsReducer (state = INITIAL_STATE, action) {
         ...state,
         blueprints: [],
         error: 'some error',
+        loading: false
+      }
+
+    case ADD_BLUEPRINT_SUCCESS:
+      return {
+        ...state,
+        blueprints: [
+          ...state.blueprints,
+          action.payload
+        ],
+        error: null,
         loading: false
       }
     default:

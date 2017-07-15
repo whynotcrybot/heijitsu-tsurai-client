@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Flex, Box } from 'reflexbox'
 
+import { AddBlueprint, DisplayBlueprints } from 'components/Blueprints'
 import { fetchBlueprints } from 'ducks/blueprints.duck'
 
 class Home extends React.Component {
@@ -10,14 +11,12 @@ class Home extends React.Component {
   }
 
   render () {
-    const { blueprints } = this.props
     return (
       <Flex justify='center'>
-        <Box w={2 / 3}>
+        <Box w={1 / 3}>
           <h2>Blueprints</h2>
-          <ul>
-            {blueprints.map(blueprint => <li key={blueprint._id}>{blueprint.title}</li>)}
-          </ul>
+          <AddBlueprint />
+          <DisplayBlueprints />
         </Box>
       </Flex>
     )
@@ -25,14 +24,8 @@ class Home extends React.Component {
 }
 
 export default connect(
-  function (state) {
-    return {
-      blueprints: state.blueprints.blueprints
-    }
-  },
-  function (dispatch) {
-    return {
-      fetchBlueprints: () => dispatch(fetchBlueprints())
-    }
-  }
+  () => ({}),
+  (dispatch) => ({
+    fetchBlueprints: () => dispatch(fetchBlueprints())
+  })
 )(Home)
