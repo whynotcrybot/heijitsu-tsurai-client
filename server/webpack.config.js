@@ -1,6 +1,7 @@
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
+const WebpackSourceMapSupport = require('webpack-source-map-support')
 const BabiliPlugin = require('babili-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
 
@@ -16,6 +17,7 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   plugins: [
+    new WebpackSourceMapSupport(),
     new BabiliPlugin(),
     new StatsPlugin('stats.json', {
       chunkModules: true,
