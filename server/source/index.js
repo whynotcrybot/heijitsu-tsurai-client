@@ -20,7 +20,7 @@ if (!module.parent) {
         `
           Listening on port: ${constants.PORT}
           Environment: ${process.env.NODE_ENV}
-        `,
+        `
       )
     }
   })
