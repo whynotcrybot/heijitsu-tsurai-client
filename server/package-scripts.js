@@ -32,6 +32,10 @@ module.exports = {
         script: 'webpack -w'
       }
     },
+    lint: {
+      default: 'eslint source',
+      fix: 'eslint --fix source'
+    },
     test: {
       default: `${crossEnv('NODE_ENV=test')} mocha $(find __tests__ -name *.test.js) --colors --compilers js:babel-register`,
       watch: series.nps('test -w')
