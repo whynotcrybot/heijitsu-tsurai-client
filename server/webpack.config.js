@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
 
 const WebpackSourceMapSupport = require('webpack-source-map-support')
@@ -18,7 +17,6 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
     new WebpackSourceMapSupport(),
     new BabiliPlugin(),
     new StatsPlugin('stats.json', {
