@@ -2,9 +2,9 @@ const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
 const WebpackSourceMapSupport = require('webpack-source-map-support')
-const WebpackMessages = require('webpack-messages')
 const BabiliPlugin = require('babili-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
+const WebpackMessages = require('webpack-messages')
 
 module.exports = {
   target: 'node',
@@ -20,14 +20,14 @@ module.exports = {
   stats: false,
   plugins: [
     new WebpackSourceMapSupport(),
-    new WebpackMessages({
-      name: 'server',
-      logger: str => console.log(`>> ${str}`)
-    }),
     new BabiliPlugin(),
     new StatsPlugin('stats.json', {
       chunkModules: true,
       exclude: /node_modules/
+    }),
+    new WebpackMessages({
+      name: 'server',
+      logger: str => console.log(`>> ${str}`)
     })
   ],
   module: {
