@@ -1,7 +1,8 @@
-import webpack from 'webpack'
 import path from 'path'
+import webpack from 'webpack'
 
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import WebpackMessages from 'webpack-messages'
 
 export default (config) => [
   new webpack.optimize.CommonsChunkPlugin({
@@ -21,5 +22,9 @@ export default (config) => [
     filename: 'index.html'
   }),
   new webpack.NamedModulesPlugin(),
-  new webpack.NoEmitOnErrorsPlugin()
+  new webpack.NoEmitOnErrorsPlugin(),
+  new WebpackMessages({
+    name: 'client',
+    logger: str => console.log(`>> ${str}`)
+  })
 ]

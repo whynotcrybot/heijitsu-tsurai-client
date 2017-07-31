@@ -42,17 +42,7 @@ export default (config) => ({
     historyApiFallback: true,
     port: 3000,
     host: '0.0.0.0',
-    stats: {
-      assets: true,
-      children: false,
-      chunks: false,
-      hash: false,
-      modules: false,
-      publicPath: false,
-      timings: true,
-      version: false,
-      warnings: true
-    }
+    stats: "none"
   },
 
   module: { loaders },
