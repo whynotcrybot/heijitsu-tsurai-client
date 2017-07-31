@@ -20,7 +20,7 @@ module.exports = {
     dev: {
       start: {
         description: 'Start project on dev environment.',
-        script: `${crossEnv('NODE_ENV=development')} nodemon dist/index.bundle.js`
+        script: `${crossEnv('NODE_ENV=development')} nodemon -q dist/index.bundle.js`
       },
       default: {
         script: concurrent.nps('dev.watch', 'dev.start')

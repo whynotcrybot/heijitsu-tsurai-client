@@ -2,6 +2,7 @@ const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
 const WebpackSourceMapSupport = require('webpack-source-map-support')
+const WebpackMessages = require('webpack-messages')
 const BabiliPlugin = require('babili-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
 
@@ -16,8 +17,13 @@ module.exports = {
     filename: '[name].bundle.js',
     libraryTarget: 'commonjs2'
   },
+  stats: false,
   plugins: [
     new WebpackSourceMapSupport(),
+    new WebpackMessages({
+      name: 'server',
+      logger: str => console.log(`>> ${str}`)
+    }),
     new BabiliPlugin(),
     new StatsPlugin('stats.json', {
       chunkModules: true,

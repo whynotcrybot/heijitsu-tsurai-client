@@ -49,6 +49,7 @@
     "prettier": "^1.5.3",
     "stats-webpack-plugin": "^0.6.1",
     "webpack": "^3.3.0",
+    "webpack-messages": "^1.0.0",
     "webpack-node-externals": "^1.6.0",
     "webpack-source-map-support": "^2.0.1"
   }
