@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Flex, Box } from 'reflexbox'
 
+import DefaultLayout from 'layouts/Default'
 import { fetchBlueprints } from 'ducks/blueprints.duck'
 
 class Home extends React.Component {
@@ -12,14 +13,12 @@ class Home extends React.Component {
   render () {
     const { blueprints } = this.props
     return (
-      <Flex justify='center'>
-        <Box w={2 / 3}>
-          <h2>Blueprints</h2>
-          <ul>
-            {blueprints.map(blueprint => <li key={blueprint._id}>{blueprint.title}</li>)}
-          </ul>
-        </Box>
-      </Flex>
+      <DefaultLayout>
+        <h2>Blueprints</h2>
+        <ul>
+          {blueprints.map(blueprint => <li key={blueprint._id}>{blueprint.title}</li>)}
+        </ul>
+      </DefaultLayout>
     )
   }
 }
