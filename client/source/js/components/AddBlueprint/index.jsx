@@ -5,18 +5,16 @@ import { addBlueprint } from 'ducks/blueprints.duck'
 
 const ENTER_KEY = 13
 
-class AddTaskInput extends React.Component {
+class BlueprintInput extends React.Component {
   handleKeyDown (event) {
-    if (event.keyCode !== ENTER_KEY) {
-      return
-    }
+    if (event.keyCode == ENTER_KEY) {
+      event.preventDefault()
 
-    event.preventDefault()
+      const title = event.target.value
 
-    const title = event.target.value
-
-    if (title) {
-      this.props.addBlueprint({title})
+      if (title) {
+        this.props.addBlueprint({title})
+      }
     }
   }
 
@@ -35,4 +33,4 @@ export default connect(
   (dispatch) => ({
     addBlueprint: (data) => dispatch(addBlueprint(data))
   })
-)(AddTaskInput)
+)(BlueprintInput)
