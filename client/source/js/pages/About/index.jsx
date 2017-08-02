@@ -1,14 +1,13 @@
 import React from 'react'
 
-import { Flex, Box } from 'reflexbox'
+import DefaultLayout from 'layouts/Default'
 
 const About = () => {
   return (
-    <Flex justify='center'>
-      <Box w={2 / 3}>
-        <h2>About</h2>
-      </Box>
-    </Flex>
+    <DefaultLayout>
+      <h2>About</h2>
+      <p>Heijitsu Tsurai</p>
+    </DefaultLayout>
   )
 }
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Flex, Box } from 'reflexbox'
 
 import DefaultLayout from 'layouts/Default'
 import { fetchBlueprints } from 'ducks/blueprints.duck'
