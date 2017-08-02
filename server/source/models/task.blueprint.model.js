@@ -56,8 +56,8 @@ BlueprintTaskSchema.methods = {
 
 BlueprintTaskSchema.statics = {
   async findBlueprint (id) {
-    return await this.findById(id)
-       .populate('completed')
+    return this.findById(id)
+      .populate('completed')
   },
   async findAllBlueprints () {
     return this.find()
