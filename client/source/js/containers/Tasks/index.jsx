@@ -14,7 +14,6 @@ class Tasks extends Component {
 
     return (
       <div>
-        <h2>Blueprints</h2>
         {
           blueprints.map(blueprint => (
             <Task
