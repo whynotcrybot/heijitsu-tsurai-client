@@ -38,17 +38,6 @@ export default function tasksReducer (state = INITIAL_STATE, action) {
         })
       }
 
-    case ADD_TASK:
-      return {
-        ...state,
-        blueprints: [
-          ...state.blueprints,
-          action.payload
-        ],
-        error: null,
-        loading: false
-      }
-
       case COMPLETE_TASK:
         return {
           ...state,
