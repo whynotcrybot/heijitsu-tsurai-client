@@ -10,15 +10,15 @@ class Tasks extends Component {
   }
 
   render () {
-    const { blueprints } = this.props
+    const { tasks } = this.props
 
     return (
       <div>
         {
-          blueprints.map(blueprint => (
+          tasks.map(task => (
             <Task
-              key={blueprint._id}
-              title={blueprint.title} />
+              key={task._id}
+              title={task.title} />
           ))
         }
       </div>
@@ -29,7 +29,7 @@ class Tasks extends Component {
 export default connect(
   function (state) {
     return {
-      blueprints: state.blueprints.blueprints
+      tasks: state.tasks.tasks
     }
   },
   function (dispatch) {
