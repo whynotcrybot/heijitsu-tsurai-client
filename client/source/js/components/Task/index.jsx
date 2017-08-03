@@ -1,17 +1,37 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+import { completeTask } from 'ducks/tasks.duck'
 
 class Task extends Component {
   render () {
-    const { title } = this.props
+    const { id, title, completed } = this.props
 
     return (
       <div>
-        <button>Complete</button>
-        <button style={{marginRight: '10px'}}>Delete</button>
+        {
+          completed ? (
+            <button
+              style={{marginRight: '10px'}}>
+              Uncomplete
+            </button>
+          ) : (
+            <button
+              onClick={() => this.props.completeTask(id)}
+              style={{marginRight: '10px'}}>
+              Complete
+            </button>
+          )
+        }
         {title}
       </div>
     )
   }
 }
 
-export default Task
+export default connect(
+  () => ({}),
+  (dispatch) => ({
+    completeTask: (id) => dispatch(completeTask(id))
+  })
+)(Task)

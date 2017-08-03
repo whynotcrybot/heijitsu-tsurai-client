@@ -8,7 +8,13 @@ const COMPLETE_TASK_FAILURE = 'COMPLETE_TASK_FAILURE'
 
 export const completeTask = (id) => ({
   [CALL_API]: {
-    types: [COMPLETE_TASK, COMPLETE_TASK_SUCCESS, COMPLETE_TASK_FAILURE],
+    types: [
+      COMPLETE_TASK,
+      {
+        type: COMPLETE_TASK_SUCCESS,
+        payload: {id}
+      },
+      COMPLETE_TASK_FAILURE],
     endpoint: 'http://localhost:8090/blueprints/' + id + '/complete',
     method: 'POST',
     headers: {'Content-Type': 'application/json'}
@@ -17,8 +23,19 @@ export const completeTask = (id) => ({
 
 const INITIAL_STATE = {
   tasks: [],
+  completed: [],
   error: null,
   loading: false
+}
+
+function wasCompletedToday (bp) {
+  if (!bp.completed.length) return false
+
+  const lastCompletedTask = bp.completed[bp.completed.length - 1]
+  const lastCompletedAt = new Date(lastCompletedTask.completedAt).toDateString()
+  const currentDate = new Date().toDateString()
+
+  return (lastCompletedAt === currentDate)
 }
 
 export default function tasksReducer (state = INITIAL_STATE, action) {
@@ -26,37 +43,19 @@ export default function tasksReducer (state = INITIAL_STATE, action) {
     case FETCH_BLUEPRINTS_SUCCESS:
       return {
         ...state,
-        tasks: action.payload.filter(bp => {
-          if (bp.completed.length) {
-            const lastCompletedTask = bp.completed[bp.completed.length - 1]
-            const lastCompletedAt = new Date(lastCompletedTask.completedAt).toDateString()
-            const currentDate = new Date().toDateString()
-
-            return (lastCompletedAt !== currentDate)
-          }
-          else return true
-        })
+        tasks: action.payload.filter(bp => !wasCompletedToday(bp)),
+        completed: action.payload.filter(bp => wasCompletedToday(bp))
       }
 
-      case COMPLETE_TASK:
-        return {
-          ...state,
-          blueprints: [],
-          error: null,
-          loading: true
-        }
       case COMPLETE_TASK_SUCCESS:
         return {
           ...state,
-          blueprints: action.payload,
+          tasks: state.tasks.filter(task => task._id !== action.payload.id),
+          completed: [
+            state.tasks.find(task => task._id === action.payload.id),
+            ...state.completed
+          ],
           error: null,
-          loading: false
-        }
-      case COMPLETE_TASK_FAILURE:
-        return {
-          ...state,
-          blueprints: [],
-          error: 'some error',
           loading: false
         }
 
