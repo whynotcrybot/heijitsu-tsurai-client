@@ -2,7 +2,7 @@ version: '2'
 services:
 
   mongo:
-    mem_limit: 75m
+    mem_limit: 50m
     image: mongo:latest
     container_name: mongo
     volumes:
@@ -13,18 +13,21 @@ services:
       driver: "none"
     restart: always
 
-  # mongoclient:
-  #   image: mongoclient/mongoclient:latest
-  #   depends_on:
-  #     - mongo
-  #   ports:
-  #     - "8091:3000"
-  #   environment:
-  #     - MONGO_URL=mongodb://mongo/heijitsu-tsurai-dev
+  mongoclient:
+    mem_limit: 75m
+    image: mongoclient/mongoclient:latest
+    depends_on:
+      - mongo
+    ports:
+      - "1234:3000"
+    logging:
+      driver: "none"
+    environment:
+      - MONGO_URL=mongodb://mongo/heijitsu-tsurai-dev
 
   server:
     tty: true
-    mem_limit: 300m
+    mem_limit: 250m
     build:
       context: ./server
       dockerfile: Dockerfile.dev
@@ -41,7 +44,7 @@ services:
 
   client:
     tty: true
-    mem_limit: 300m
+    mem_limit: 250m
     build:
       context: ./client
       dockerfile: Dockerfile.dev
