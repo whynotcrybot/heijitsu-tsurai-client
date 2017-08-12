@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { completeTask } from 'ducks/tasks.duck'
+import { complete, uncomplete } from 'ducks/tasks.duck'
 
 class Task extends Component {
   render () {
@@ -12,12 +12,13 @@ class Task extends Component {
         {
           completed ? (
             <button
+              onClick={() => this.props.uncomplete(id)}
               style={{marginRight: '10px'}}>
               Uncomplete
             </button>
           ) : (
             <button
-              onClick={() => this.props.completeTask(id)}
+              onClick={() => this.props.complete(id)}
               style={{marginRight: '10px'}}>
               Complete
             </button>
@@ -32,6 +33,7 @@ class Task extends Component {
 export default connect(
   () => ({}),
   (dispatch) => ({
-    completeTask: (id) => dispatch(completeTask(id))
+    complete: (id) => dispatch(complete(id)),
+    uncomplete: (id) => dispatch(uncomplete(id)),
   })
 )(Task)
