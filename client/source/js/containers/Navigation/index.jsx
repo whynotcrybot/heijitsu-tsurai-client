@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { Flex, Box } from 'reflexbox'
 import * as styles from './styles.css'
 
 const Item = (props) => {
@@ -19,17 +18,9 @@ const Item = (props) => {
 
 const Wrapper = (props) => {
   return (
-    <Flex
-      align='center'
-      justify='center'
-    >
-      <Box
-        className={styles.wrapper}
-        w={1 / 2}
-      >
-        {props.children}
-      </Box>
-    </Flex>
+    <div className={styles.wrapper}>
+      {props.children}
+    </div>
   )
 }
 
