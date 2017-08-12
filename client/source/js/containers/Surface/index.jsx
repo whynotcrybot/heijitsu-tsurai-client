@@ -7,7 +7,7 @@ class Surface extends Component {
 
     return (
       <div>
-        <Flex align='center' justify='center'>
+        <Flex justify='center'>
           {children}
         </Flex>
       </div>
