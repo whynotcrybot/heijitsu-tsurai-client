@@ -14,7 +14,6 @@ class Tasks extends Component {
 
     return (
       <div>
-        <p>Today</p>
         {
           tasks.map(task => (
             <Task
@@ -23,8 +22,6 @@ class Tasks extends Component {
               title={task.title} />
           ))
         }
-
-        <p>Completed</p>
         {
           completed.map(task => (
             <Task
