@@ -1,4 +1,4 @@
-FROM node:8.1.4-alpine
+FROM node:8.3.0-alpine
 
 MAINTAINER Alex Katsero <alexanderkatsero@gmail.com> <https://github.com/whynotcrybot>
 
