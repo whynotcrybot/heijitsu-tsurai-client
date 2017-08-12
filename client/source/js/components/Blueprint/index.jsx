@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { deleteBlueprint } from 'ducks/blueprints.duck'
+
 class Blueprint extends Component {
   render () {
     const { id, title } = this.props
@@ -21,5 +23,6 @@ class Blueprint extends Component {
 export default connect(
   () => ({}),
   (dispatch) => ({
+    deleteBlueprint: (id) => dispatch(deleteBlueprint(id))
   })
 )(Blueprint)
