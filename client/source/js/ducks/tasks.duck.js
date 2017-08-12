@@ -23,7 +23,6 @@ export const completeTask = (id) => ({
 
 const INITIAL_STATE = {
   tasks: [],
-  completed: [],
   error: null,
   loading: false
 }
@@ -43,18 +42,22 @@ export default function tasksReducer (state = INITIAL_STATE, action) {
     case FETCH_BLUEPRINTS_SUCCESS:
       return {
         ...state,
-        tasks: action.payload.filter(bp => !wasCompletedToday(bp)),
-        completed: action.payload.filter(bp => wasCompletedToday(bp))
+        tasks: action.payload.map(bp => {
+          return {
+            ...bp,
+            completed: wasCompletedToday(bp)
+          }
+        }),
       }
 
       case COMPLETE_TASK_SUCCESS:
         return {
           ...state,
-          tasks: state.tasks.filter(task => task._id !== action.payload.id),
-          completed: [
-            state.tasks.find(task => task._id === action.payload.id),
-            ...state.completed
-          ],
+          tasks: state.tasks.map(task =>
+            task._id === action.payload.id
+              ? { ...task, completed: true }
+              : task
+          ),
           error: null,
           loading: false
         }

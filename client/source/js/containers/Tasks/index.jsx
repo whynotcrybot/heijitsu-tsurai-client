@@ -38,8 +38,8 @@ class Tasks extends Component {
 
 export default connect(
   (state) => ({
-    tasks: state.tasks.tasks,
-    completed: state.tasks.completed
+    tasks: state.tasks.tasks.filter(task => !task.completed),
+    completed: state.tasks.tasks.filter(task => task.completed),
   }),
   (dispatch) => ({
       fetchBlueprints: () => dispatch(fetchBlueprints())
