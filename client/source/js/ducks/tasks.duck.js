@@ -1,6 +1,9 @@
 import { CALL_API } from 'redux-api-middleware'
-
-const FETCH_BLUEPRINTS_SUCCESS = 'FETCH_BLUEPRINTS_SUCCESS'
+import {
+  FETCH_BLUEPRINTS_SUCCESS,
+  ADD_BLUEPRINT_SUCCESS,
+  DELETE_BLUEPRINT_SUCCESS
+} from './blueprints.duck'
 
 const COMPLETE_TASK = 'COMPLETE_TASK'
 const COMPLETE_TASK_SUCCESS = 'COMPLETE_TASK_SUCCESS'
@@ -65,6 +68,24 @@ export default function tasksReducer (state = INITIAL_STATE, action) {
             completed: wasCompletedToday(bp)
           }
         }),
+      }
+
+    case ADD_BLUEPRINT_SUCCESS:
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks,
+          {
+            ...action.payload,
+            completed: false
+          }
+        ]
+      }
+
+    case DELETE_BLUEPRINT_SUCCESS:
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task._id !== action.payload.id)
       }
 
     case COMPLETE_TASK_SUCCESS:
