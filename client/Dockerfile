@@ -17,9 +17,9 @@ COPY . /app
 RUN yarn build
 
 # remove source files
-RUN rm -rf source
+# RUN rm -rf source
 
 EXPOSE 3000
 
 # cmd to start service
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]

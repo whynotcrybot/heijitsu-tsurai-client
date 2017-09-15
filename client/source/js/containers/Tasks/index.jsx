@@ -10,16 +10,25 @@ class Tasks extends Component {
   }
 
   render () {
-    const { blueprints } = this.props
+    const { tasks, completed } = this.props
 
     return (
       <div>
-        <h2>Blueprints</h2>
         {
-          blueprints.map(blueprint => (
+          tasks.map(task => (
             <Task
-              key={blueprint._id}
-              title={blueprint.title} />
+              key={task._id}
+              id={task._id}
+              title={task.title} />
+          ))
+        }
+        {
+          completed.map(task => (
+            <Task
+              key={task._id}
+              id={task._id}
+              title={task.title}
+              completed={true} />
           ))
         }
       </div>
@@ -28,14 +37,11 @@ class Tasks extends Component {
 }
 
 export default connect(
-  function (state) {
-    return {
-      blueprints: state.blueprints.blueprints
-    }
-  },
-  function (dispatch) {
-    return {
+  (state) => ({
+    tasks: state.tasks.tasks.filter(task => !task.completed),
+    completed: state.tasks.tasks.filter(task => task.completed),
+  }),
+  (dispatch) => ({
       fetchBlueprints: () => dispatch(fetchBlueprints())
-    }
-  }
+  })
 )(Tasks)

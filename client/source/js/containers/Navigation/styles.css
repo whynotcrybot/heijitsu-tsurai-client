@@ -1,14 +1,18 @@
-.navigation-wrapper {
+.wrapper {
+  position: fixed;
+  left: 20px;
+  top: 20px;
   border: 1px solid black;
   padding: 10px;
 }
 
-.navigation-item {
+.item {
+  display: block;
   color: grey;
   text-decoration: none;
   padding: 0 10px;
 }
 
-.navigation-item--active {
+.item--active {
   color: black;
 }

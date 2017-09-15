@@ -8,9 +8,7 @@ class Surface extends Component {
     return (
       <div>
         <Flex justify='center'>
-          <Box w={2 / 3}>
-            {children}
-          </Box>
+          {children}
         </Flex>
       </div>
     )
