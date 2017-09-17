@@ -27,7 +27,7 @@ services:
 
   server:
     tty: true
-    mem_limit: 250m
+    mem_limit: 1024m
     build:
       context: ./server
       dockerfile: Dockerfile.dev
@@ -44,7 +44,7 @@ services:
 
   client:
     tty: true
-    mem_limit: 250m
+    mem_limit: 1024m
     build:
       context: ./client
       dockerfile: Dockerfile.dev
