@@ -1,0 +1,9 @@
+.blueprint {
+  padding: 15px 20px;
+  cursor: pointer;
+  color: white;
+
+  &:hover {
+    background-color: rgb(42, 60, 66);
+  }
+}

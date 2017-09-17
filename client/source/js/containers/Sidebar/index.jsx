@@ -11,7 +11,6 @@ class Sidebar extends Component {
       <Box
         className={style.sidebar}
         w={1/5}
-        p={2}
       >
         {children}
       </Box>
