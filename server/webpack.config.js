@@ -2,7 +2,7 @@ const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
 const WebpackSourceMapSupport = require('webpack-source-map-support')
-const BabiliPlugin = require('babili-webpack-plugin')
+const MinifyPlugin = require('babel-minify-webpack-plugin')
 const StatsPlugin = require('stats-webpack-plugin')
 const WebpackMessages = require('webpack-messages')
 
@@ -21,7 +21,7 @@ module.exports = {
   stats: false,
   plugins: [
     new WebpackSourceMapSupport(),
-    new BabiliPlugin(),
+    new MinifyPlugin(),
     new StatsPlugin('stats.json', {
       chunkModules: true,
       exclude: /node_modules/
