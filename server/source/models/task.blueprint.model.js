@@ -76,13 +76,15 @@ BlueprintTaskSchema.statics = {
   },
 
   async getTimeline () {
-    const monday = moment().set({
+    const monday = moment().isoWeekday(1).set({
       day: 'Monday',
       hour: 0,
       minute: 0,
       second: 0
     })
     .toDate()
+
+    console.log('mondaAYYYYYYY___', monday)
 
     return this.aggregate([
       {$unwind: '$completed'},

@@ -1,4 +1,3 @@
-/* global describe it */
 import { expect } from 'chai'
 
 import server from '../../../__mocks__/utils/server.mock'
