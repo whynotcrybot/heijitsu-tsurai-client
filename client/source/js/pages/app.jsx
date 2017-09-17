@@ -3,6 +3,8 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import '../../style/normalize.css'
+import '../../style/global.css'
+
 import Routes from './routes'
 
 const Root = (props) => {
