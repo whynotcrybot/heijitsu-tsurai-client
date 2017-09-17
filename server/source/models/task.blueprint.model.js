@@ -84,8 +84,6 @@ BlueprintTaskSchema.statics = {
     })
     .toDate()
 
-    console.log('mondaAYYYYYYY___', monday)
-
     return this.aggregate([
       {$unwind: '$completed'},
       {$lookup: {
