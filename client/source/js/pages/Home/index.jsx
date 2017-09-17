@@ -1,22 +1,23 @@
 import React from 'react'
 import { Flex, Box } from 'reflexbox'
 
-import DefaultLayout from 'layouts/Default'
+import { Sidebar, Surface } from 'containers'
 import Blueprints from 'containers/Blueprints'
 import Tasks from 'containers/Tasks'
 
 const Home = () => {
   return (
-    <DefaultLayout>
-      <Box w={1 / 3}>
-        <h2>Blueprints</h2>
+    <Flex>
+      <Sidebar>
         <Blueprints />
-      </Box>
-      <Box w={1 / 3}>
-        <h2>Tasks</h2>
-        <Tasks />
-      </Box>
-    </DefaultLayout>
+      </Sidebar>
+      <Surface>
+        <Box w={1}>
+          <h2>Tasks</h2>
+          <Tasks />
+        </Box>
+      </Surface>
+    </Flex>
   )
 }
 

@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
 
-class Surface extends React.Component {
+class Sidebar extends Component {
   render () {
     const { children } = this.props
 
     return (
       <Box
-        className='surface'
-        w={3/4}
+        className='sidebar'
+        w={1 / 4}
       >
         {children}
       </Box>
@@ -16,4 +16,4 @@ class Surface extends React.Component {
   }
 }
 
-export default Surface
+export default Sidebar
