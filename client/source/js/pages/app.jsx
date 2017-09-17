@@ -1,5 +1,5 @@
 import React from 'react'
-import { Provider } from 'react-redux'
+import { Provider, connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import '../../style/normalize.css'
@@ -7,14 +7,27 @@ import '../../style/global.css'
 
 import Routes from './routes'
 
-const Root = (props) => {
-  return (
-    <Provider store={props.store}>
-      <Router>
-        <Routes />
-      </Router>
-    </Provider>
-  )
+import { fetchBlueprints } from 'ducks/blueprints.duck'
+
+class Root extends React.Component {
+  componentDidMount () {
+    this.props.fetchBlueprints()
+  }
+
+  render () {
+    return (
+      <Provider store={this.props.store}>
+        <Router>
+          <Routes />
+        </Router>
+      </Provider>
+    )
+  }
 }
 
-export default Root
+export default connect(
+  null,
+  (dispatch) => ({
+    fetchBlueprints: () => dispatch(fetchBlueprints())
+  })
+)(Root)
