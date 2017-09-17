@@ -7,6 +7,7 @@ const StatsPlugin = require('stats-webpack-plugin')
 const WebpackMessages = require('webpack-messages')
 
 module.exports = {
+  devtool: 'source-map',
   target: 'node',
   externals: [nodeExternals()],
   entry: {
