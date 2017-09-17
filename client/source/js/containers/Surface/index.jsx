@@ -8,7 +8,8 @@ class Surface extends React.Component {
     return (
       <Box
         className='surface'
-        w={3/4}
+        w={4/5}
+        p={2}
       >
         {children}
       </Box>
