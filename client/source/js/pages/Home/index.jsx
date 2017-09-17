@@ -1,7 +1,7 @@
 import React from 'react'
-import { Flex, Box } from 'reflexbox'
+import { Flex } from 'reflexbox'
 
-import { Sidebar, Surface } from 'containers'
+import { Sidebar, Surface, Section } from 'containers'
 import Blueprints from 'containers/Blueprints'
 import Tasks from 'containers/Tasks'
 
@@ -12,10 +12,13 @@ const Home = () => {
         <Blueprints />
       </Sidebar>
       <Surface>
-        <Box w={1}>
+        <Section>
           <h2>Tasks</h2>
           <Tasks />
-        </Box>
+        </Section>
+        <Section>
+          <h2>Info about currently selected task</h2>
+        </Section>
       </Surface>
     </Flex>
   )
