@@ -55,8 +55,6 @@ describe('POST ' + ENDPOINT, () => {
         .end((err, res) => {
           const { body, status } = res
 
-          console.log(body)
-
           expect(err).to.be.null
           expect(status).to.equal(200)
 
@@ -74,8 +72,6 @@ describe('POST ' + ENDPOINT, () => {
             .to.equal( new Date(testCompletedTask2.completedAt).toString() )
           expect( new Date(body[2].completed[0].completedAt).toString() )
             .to.equal( new Date(testCompletedTask.completedAt).toString() )
-
-
 
           done()
         })
