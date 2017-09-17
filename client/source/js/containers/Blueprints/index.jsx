@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import AddBlueprint from 'components/AddBlueprint'
 import Blueprint from 'components/Blueprint'
-import { fetchBlueprints } from 'ducks/blueprints.duck'
 
 class Blueprints extends Component {
   render () {
