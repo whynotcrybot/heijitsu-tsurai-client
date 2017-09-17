@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-import Navigation from 'containers/Navigation'
 import Surface from 'containers/Surface'
 
 class DefaultLayout extends Component {
@@ -9,10 +8,6 @@ class DefaultLayout extends Component {
 
     return (
       <div>
-        <Navigation.Wrapper>
-          <Navigation.Item to={'/'}>Home</Navigation.Item>
-          <Navigation.Item to={'/about'}>About</Navigation.Item>
-        </Navigation.Wrapper>
         <Surface>
           {children}
         </Surface>
