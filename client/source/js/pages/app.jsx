@@ -1,9 +1,10 @@
 import React from 'react'
 import { Provider, connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Flex, Box } from 'reflexbox'
 
-import '../../style/index.global.css'
+import '../../style/normalize.css'
+import '../../style/global.css'
+
 import Routes from './routes'
 
 import { fetchBlueprints } from 'ducks/blueprints.duck'
@@ -17,11 +18,7 @@ class Root extends React.Component {
     return (
       <Provider store={this.props.store}>
         <Router>
-          <Flex wrap>
-            <Box w={1}>
-              <Routes />
-            </Box>
-          </Flex>
+          <Routes />
         </Router>
       </Provider>
     )

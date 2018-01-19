@@ -1,0 +1,9 @@
+.surface {
+  &>div{
+    background-color: rgb(64,135,89);
+
+    &:first-child {
+      background-color: rgb(34,80,73);
+    }
+  }
+}

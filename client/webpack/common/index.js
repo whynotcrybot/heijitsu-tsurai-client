@@ -34,7 +34,8 @@ export default (config) => ({
       '.jsx',
       '.js',
       '.json',
-      '.css'
+      '.css',
+      '.scss'
     ]
   },
   devServer: {

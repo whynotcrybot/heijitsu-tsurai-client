@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 
 import { complete, uncomplete } from 'ducks/tasks.duck'
 
+import * as style from './style'
+
 class Task extends Component {
   render () {
     const { id, title, completed } = this.props
 
     return (
-      <div>
+      <div className={style.task}>
         {
           completed ? (
             <button

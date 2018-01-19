@@ -1,16 +1,19 @@
-import React, { Component } from 'react'
-import { Flex, Box } from 'reflexbox'
+import React from 'react'
+import { Flex } from 'reflexbox'
 
-class Surface extends Component {
+import * as style from './style'
+
+class Surface extends React.Component {
   render () {
     const { children } = this.props
 
     return (
-      <div>
-        <Flex justify='center'>
-          {children}
-        </Flex>
-      </div>
+      <Flex
+        className={style.surface}
+        w={4/5}
+      >
+        {children}
+      </Flex>
     )
   }
 }
